@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h2>EDIT A HALL of FRAME</h2>
+        <form method="POST">
+            {%  csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save" class="btn btn-primary">
+        </form>
+        <a href="{% url 'delete_hall' hall.id %}"><input type="submit" value="Delete" class="btn btn-danger"></a>
+    </div>
+
+
+{% endblock %}

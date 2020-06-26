@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h2>CREATE A HALL of FRAME</h2>
+        <form method="POST">
+            {%  csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock %}
