@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 # Create your views here.
-from halls.models import Hall
+from halls.forms import VideoForm, SearchForm
+from halls.models import Hall, Video
 
 
 def index(request):
@@ -14,6 +15,22 @@ def index(request):
 
 def dashboard(request):
     return render(request, "pages/dashboard.html")
+
+
+def addVideo(request, pk):
+    form = VideoForm
+    search = SearchForm
+    if request.method == "POST":
+        filled_form = VideoForm(request.POST)
+        if filled_form.is_valid():
+            video = Video()
+            video.title = filled_form.cleaned_data['title']
+            video.url = filled_form.cleaned_data['url']
+            video.youtube_id = filled_form.cleaned_data['youtube_id']
+            video.hall = Hall.objects.get(pk=pk)
+            video.save()
+            return redirect(request.path)
+    return render(request, "halls/addVideo.html", {'form':form, 'search': search})
 
 
 class SignUp(generic.CreateView):

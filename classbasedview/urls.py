@@ -36,4 +36,7 @@ urlpatterns = [
                   path("hallofframe/<int:pk>/update", views.UpdateHall.as_view(), name="update_hall"),
                   path("hallofframe/<int:pk>/delete", views.DeleteHall.as_view(), name="delete_hall"),
 
+                  #video
+                  path("hallofframe/<int:pk>/addVideo", views.addVideo, name="addVideo"),
+
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

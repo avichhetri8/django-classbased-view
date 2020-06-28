@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container">
+        <h2>CREATE A HALL of Video</h2>
+        <form method="POST">
+            {%  csrf_token %}
+            {%  for field in form %}
+                <div class="row">
+                    <div class="container {% if field.errors %} alert alert-danger{% endif %}">
+                        <div class="col-md-12">
+                            {{ field.errors }}
+
+                            <div class="col-md-12">
+                                {{ field.label_tag }}
+                            </div>
+                            <div class="col-md-12">
+                                {%  render_field field class="form-control" %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+                    <input  type="submit" value="Create" style="left: 50%" class="btn btn-primary">
+
+
+        </form>
+
+    </div>
+{% endblock %}
