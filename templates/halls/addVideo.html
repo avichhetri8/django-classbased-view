@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-    <div class="container">
-        <h2>CREATE A HALL of Video</h2>
+    <div class="">
+        <h2>ADD A {{ hall.title }}  Video</h2>
         <form method="POST">
             {%  csrf_token %}
             {%  for field in form %}
@@ -23,10 +23,56 @@
                 </div>
             {% endfor %}
 
-                    <input  type="submit" value="Create" style="left: 50%" class="btn btn-primary">
+            <input  type="submit" value="Add Video" style="left: 50%" class="btn btn-primary">
 
 
         </form>
 
     </div>
+
+    {% for s in search %}
+        <div class="container">
+            <div class="form col-md-12">
+                {{ s.label_tag }}
+            </div>
+            <div class="col-md-12">
+                {%  render_field s class="form-control" %}
+            </div>
+        </div>
+
+    {% endfor %}
+    <div class="search-result"></div>
+      {% if search %}
+        <div class="row">
+            {% for s in search %}
+                {{ s.title }}
+                {{ s.url }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_search_term').keypress(function(){
+                $(".search-result").text("Loading.....")
+                $.ajax({
+
+                    url : '/video/search',
+                    data : {
+                        'search_data' : 'hellp'
+                    },
+                    dataType :'json',
+                    success:function (data) {
+                        $(".search-result").text(data.data)
+                        console.log(data)
+                    },
+                    error:function (error) {
+                         $(".search-result").text(error.responseText)
+                    }
+
+                })
+            })
+        });
+    </script>
+
 {% endblock %}

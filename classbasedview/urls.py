@@ -38,5 +38,6 @@ urlpatterns = [
 
                   #video
                   path("hallofframe/<int:pk>/addVideo", views.addVideo, name="addVideo"),
+                  path("video/search", views.videoSearch, name="videoSearch"),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

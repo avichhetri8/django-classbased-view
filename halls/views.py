@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -20,6 +21,7 @@ def dashboard(request):
 def addVideo(request, pk):
     form = VideoForm
     search = SearchForm
+    hall = Hall.objects.get(pk=pk)
     if request.method == "POST":
         filled_form = VideoForm(request.POST)
         if filled_form.is_valid():
@@ -30,7 +32,11 @@ def addVideo(request, pk):
             video.hall = Hall.objects.get(pk=pk)
             video.save()
             return redirect(request.path)
-    return render(request, "halls/addVideo.html", {'form':form, 'search': search})
+    return render(request, "halls/addVideo.html", {'form':form, 'search': search, 'hall': hall})
+
+
+def videoSearch(request):
+    return JsonResponse({'data':"dasda"})
 
 
 class SignUp(generic.CreateView):
